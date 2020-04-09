@@ -1,29 +1,80 @@
 package ru.job4j.tracker;
 
-public class Tracker {
-    private final Item[] items = new Item[100];
-    private int ids = 1;
-    private int size = 0;
+import java.util.Arrays;
+import java.util.Random;
 
+/**
+ * Class   Tracker
+ * Created 09/04/2020 - 9:15
+ * Project job4j_tracker
+ * Author  Sergey Bulygin
+ */
+public class Tracker {
+    /**
+     * Array for items.
+     */
+    private Item[] items = new Item[100];
+    /**
+     * Position new item in array.
+     */
+    private int position = 0;
+    /**
+     * Random value for generate id.
+     */
+    private static final Random RN = new Random();
+
+    /**
+     * Generate id.
+     * @return id.
+     */
+    private String generateId() {
+        return String.valueOf(RN.nextInt(10000));
+    }
+
+    /**
+     * Method add item/
+     * @param item item.
+     * @return new item.
+     */
     public Item add(Item item) {
         item.setId(generateId());
-        items[size++] = item;
+        items[position++] = item;
         return item;
     }
 
-    private String generateId() {
-        return String.valueOf(ids++);
-    }
-
+    /**
+     * Method find item by id.
+     * @param id id
+     * @return item.
+     */
     public Item findById(String id) {
-        Item rsl = null;
-        for (int index = 0; index < size; index++) {
-            Item item = items[index];
+        Item result = null;
+        for (Item item : this.items) {
             if (item.getId().equals(id)) {
-                rsl = item;
+                result = item;
                 break;
             }
         }
-        return rsl;
+        return result;
+    }
+
+    /**
+     * Method find all items.
+     * @return array items.
+     */
+    public Item[] findAll(){
+        return Arrays.copyOf(items, position);
+    }
+
+    public Item[] findByName(String key){
+        int step = 0;
+        Item[] result = new Item[position];
+        for (int index = 0; index <= position; index++) {
+            if (this.items[index].getName().equals(key)) {
+                result[step++] = this.items[index];
+                break;
+            }
+        }
+        return Arrays.copyOf(result, step);
     }
 }
