@@ -93,6 +93,13 @@ public class Tracker {
         }
     }
 
+    public void delete(String id) {
+        int index = indexOf(id);
+        items[indexOf(id)] = null;
+        System.arraycopy(this.items, index + 1,  this.items, index, position - index);
+        position--;
+    }
+
     /**
      * Method return index by id.
      * @param id id.
