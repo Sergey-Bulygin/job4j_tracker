@@ -10,14 +10,17 @@ import java.util.Random;
  * Author  Sergey Bulygin
  */
 public class Tracker {
+
     /**
      * Array for items.
      */
     private Item[] items = new Item[100];
+
     /**
      * Position new item in array.
      */
     private int position = 0;
+
     /**
      * Random value for generate id.
      */
@@ -48,14 +51,8 @@ public class Tracker {
      * @return item.
      */
     public Item findById(String id) {
-        Item result = null;
-        for (Item item : this.items) {
-            if (item.getId().equals(id)) {
-                result = item;
-                break;
-            }
-        }
-        return result;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
     }
 
     /**
@@ -66,6 +63,11 @@ public class Tracker {
         return Arrays.copyOf(items, position);
     }
 
+    /**
+     * Method for retrieving a list by name.
+     * @param key key.
+     * @return  list.
+     */
     public Item[] findByName(String key){
         int step = 0;
         Item[] result = new Item[position];
@@ -76,5 +78,34 @@ public class Tracker {
             }
         }
         return Arrays.copyOf(result, step);
+    }
+
+    /**
+     * The method of replacing the application with the same id.
+     * @param id id.
+     * @param item item.
+     */
+    public void replace(String id, Item item) {
+        int index = indexOf(id);
+        if (index > -1) {
+            items[index] = item;
+            item.setId(id);
+        }
+    }
+
+    /**
+     * Method return index by id.
+     * @param id id.
+     * @return index.
+     */
+    private int indexOf(String id) {
+        int result = -1;
+        for (int index = 0; index < position; index++) {
+            if (items[index].getId().equals(id)) {
+                result = index;
+                break;
+            }
+        }
+        return result;
     }
 }

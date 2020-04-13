@@ -38,7 +38,7 @@ public class TrackerTest {
      * Information method to test.
      */
     @Before
-    public void infoForTest() {
+    public void setup() {
         tracker = new Tracker();
         first = new Item("test1");
         second = new Item("test2");
@@ -80,5 +80,15 @@ public class TrackerTest {
         tracker.add(third);
         Item[] result = tracker.findAll();
         assertThat((result), arrayContainingInAnyOrder(first, second, third));
+    }
+
+    @Test
+    public void whenReplace() {
+        Item bug = new Item("Bug");
+        tracker.add(bug);
+        String id = bug.getId();
+        Item bugWithDesc = new Item("Bug with description");
+        tracker.replace(id, bugWithDesc);
+        assertThat(tracker.findById(id).getName(), is("Bug with description"));
     }
 }
