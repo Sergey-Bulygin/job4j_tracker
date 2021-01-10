@@ -14,7 +14,7 @@ public class Tracker {
     /**
      * Array for items.
      */
-    private Item[] items = new Item[100];
+    private final Item[] items = new Item[100];
 
     /**
      * Position new item in array.
@@ -93,6 +93,10 @@ public class Tracker {
         }
     }
 
+    /**
+     * The method delete the application with the same id.
+     * @param id
+     */
     public void delete(String id) {
         int index = indexOf(id);
         items[indexOf(id)] = null;
